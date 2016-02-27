@@ -15,7 +15,7 @@ html, body {
 .player-bar {
   display: flex;
   color: $colorPrimary;
-  background: $colorSecondary;
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .player-buttonGroup {
@@ -51,12 +51,19 @@ html, body {
   left: 0;
   right: 0;
   bottom: 0;
-  transition: all linear 0.5s;
+  transition: all linear 1s;
 }
 
 .player-progress-bar {
   @include stretch;
   background: $colorPrimary;
+}
+
+@mixin playerTitle {
+  padding-left: 15px;
+  padding-right: 15px;
+  box-sizing: border-box;
+  text-overflow: ellipsis;
 }
 
 .player-title-overlay {
@@ -66,10 +73,27 @@ html, body {
   white-space: nowrap;
 }
 
-.player-title {
+.player-title-overlay-content {
+  @include playerTitle;
+}
 
+.player-title {
+  @include playerTitle;
 }
 
 .player-time {
+  margin-left: 15px;
+  margin-right: 15px;
+}
 
+.player-background {
+  width: 100%;
+  position: absolute;
+  z-index: -1;
+  top: 0;
+}
+
+.blur-background {
+  filter: blur(25px);
+  -webkit-filter: blur(25px);
 }

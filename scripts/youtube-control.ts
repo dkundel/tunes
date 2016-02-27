@@ -4,8 +4,9 @@ export interface YouTubeTimeUpdate {
 }
 
 export interface YouTubeCallbacks {
-  onTimeUpdate: (evt: YouTubeTimeUpdate) => void;
-  onVideoLoaded: (evt: YT.VideoData) => void;
+  onTimeUpdate?: (evt: YouTubeTimeUpdate) => void;
+  onVideoLoaded?: (evt: YT.VideoData) => void;
+  onPlayPause?: (evt: YT.PlayerState) => void;
 }
 
 export class YouTubePlayer {
@@ -62,16 +63,18 @@ export class YouTubePlayer {
     }
   }
 
+  public moveToPercentage(p: number) {
+    let totalTime = this.player.getDuration();
+    let targetTime = totalTime * p;
+    this.player.seekTo(targetTime, true);
+  }
+
   private onReady(evt: YT.EventArgs) {
-    console.log('READY');
-    console.info(arguments);
     this.player.playVideo();
   }
 
   private onError(evt: YT.EventArgs) {
     if (evt.data === 100 || evt.data === 101 || evt.data === 150) {
-      console.log('NEXT');
-      console.dir(evt);
       this.blockedVideos[evt.target.getPlaylistIndex()] = true;
       this.player.nextVideo();
     }
@@ -82,8 +85,8 @@ export class YouTubePlayer {
 
     if (evt.data === YT.PlayerState.PLAYING) {
       if (this.callbacks.onTimeUpdate) {
-        let totalTime = this.player.getDuration();
         interval = setInterval(() => {
+          let totalTime = this.player.getDuration();
           let currentTime = this.player.getCurrentTime();
           this.callbacks.onTimeUpdate({currentTime, totalTime});
         }, 1000);
@@ -95,6 +98,12 @@ export class YouTubePlayer {
     if (evt.data === YT.PlayerState.BUFFERING) {
       let data = this.player.getVideoData();
       this.callbacks.onVideoLoaded(data);
+    }
+
+    if (evt.data === YT.PlayerState.PAUSED || evt.data === YT.PlayerState.PLAYING) {
+      if (this.callbacks.onPlayPause) {
+        this.callbacks.onPlayPause(evt.data);
+      }
     }
   }
 

@@ -7,6 +7,9 @@ import { YouTubePlayer, YouTubeTimeUpdate }  from '../youtube-control';
 
 const { app, globalShortcut, clipboard } = electron.remote;
 
+const PLAY_ICON = 'play_arrow';
+const PAUSE_ICON = 'pause';
+
 function registerHandlers() {
 
 }
@@ -19,7 +22,9 @@ export interface IPlayerState {
   progressBar?: React.CSSProperties,
   titleOverlay?: React.CSSProperties,
   currentTime?: string,
-  info?: string
+  info?: string,
+  backgroundImage?: string,
+  playIcon?: string
 }
 
 export default class Player extends React.Component<IPlayerProps, IPlayerState> {
@@ -27,10 +32,12 @@ export default class Player extends React.Component<IPlayerProps, IPlayerState> 
     this.registerHandlers();
     this.player = new YouTubePlayer('youtubePlayer', {
       onTimeUpdate: (e) => this.onProgress(e),
-      onVideoLoaded: (e) => this.onNewVideo(e)
+      onVideoLoaded: (e) => this.onNewVideo(e),
+      onPlayPause: (e) => this.onPlayPause(e)
     });
     this.progressBar = ReactDOM.findDOMNode(this.refs['progressBar']) as HTMLElement;
     this.titleOverlay = ReactDOM.findDOMNode(this.refs['titleOverlay']) as HTMLElement;
+    this.progressContainer = ReactDOM.findDOMNode(this.refs['progressContainer']) as HTMLElement;
     this.progressBarWidth = this.progressBar.getBoundingClientRect().width;
     this.resetProgress();
   }
@@ -40,11 +47,17 @@ export default class Player extends React.Component<IPlayerProps, IPlayerState> 
       <div className="player">
         <div className="player-bar">
           <div className="player-buttonGroup">
-            <button onClick={(e) => this.togglePlay()} className="player-button player-button--primary">Play</button>
-            <button onClick={(e) => this.pressPrev()} className="player-button player-button--primary">Prev</button>
-            <button onClick={(e) => this.pressNext()} className="player-button player-button--primary">Next</button>
+            <button onClick={(e) => this.togglePlay()} className="player-button player-button--primary">
+              <i className="material-icons">{this.state.playIcon}</i>
+            </button>
+            <button onClick={(e) => this.pressPrev()} className="player-button player-button--primary">
+              <i className="material-icons">skip_previous</i>
+            </button>
+            <button onClick={(e) => this.pressNext()} className="player-button player-button--primary">
+              <i className="material-icons">skip_next</i>
+            </button>
           </div>
-          <div className="player-progress">
+          <div className="player-progress" ref="progressContainer" onClick={(e) => this.moveTrack(e)}>
             <p className="player-title">{this.state.info}</p>
             <div className="player-progress-bar" ref="progressBar" style={this.state.progressBar}></div>
             <div className="player-title-overlay" ref="titleOverlay" style={this.state.titleOverlay}>
@@ -55,12 +68,17 @@ export default class Player extends React.Component<IPlayerProps, IPlayerState> 
             <p className="player-time">{this.state.currentTime}</p>
           </div>
         </div>
+        <img className="player-background blur-background" src={this.state.backgroundImage}/>
         <div id="youtubePlayer"></div>
       </div>
     );
   }
 
-  public state: IPlayerState = {};
+  public state: IPlayerState = {
+    backgroundImage: '',
+    currentTime: '00:00',
+    playIcon: PLAY_ICON
+  };
 
   private setPercent(percent: number) {
     this.progressBarWidth = this.progressBar.getBoundingClientRect().width;
@@ -96,17 +114,42 @@ export default class Player extends React.Component<IPlayerProps, IPlayerState> 
     }
   }
 
+  public moveTrack(e: React.MouseEvent) {
+    let left = this.progressContainer.getBoundingClientRect().left;
+    let width = this.progressContainer.getBoundingClientRect().width;
+
+    let relativePos = e.pageX - left;
+    let percent = relativePos / width;
+    this.player.moveToPercentage(percent);
+  }
+
+  private onPlayPause(state: YT.PlayerState) {
+    if (state === YT.PlayerState.PLAYING) {
+      this.setState({playIcon: PAUSE_ICON});
+      return;
+    }
+
+    if (state === YT.PlayerState.PAUSED) {
+      this.setState({playIcon: PLAY_ICON});
+      return;
+    }
+  }
+
   private onProgress(e: YouTubeTimeUpdate) {
     let { currentTime, totalTime } = e;
-    let percent = Math.round((currentTime / totalTime) * 100);
+    let percent = (currentTime / totalTime) * 100.0;
+    let seconds = Math.round(currentTime % 60.0);
+    let minutes = Math.floor(currentTime / 60.0);
     this.setPercent(percent);
-    let time = moment({seconds: currentTime});
-    this.setState({ currentTime: time.format('mm:ss')});
+    let time = moment({m: minutes, s: seconds});
+    this.setState({ currentTime: time.format('mm:ss') });
   }
 
   private onNewVideo(e: YT.VideoData) {
-    let { author, title } = e;
+    let { author, title, video_id } = e;
+    this.resetProgress();
     this.setState({ info: `${title} - ${author}`});
+    this.setState({ backgroundImage: `http://img.youtube.com/vi/${video_id}/maxresdefault.jpg`});
   }
 
   private registerHandlers() {
@@ -151,6 +194,7 @@ export default class Player extends React.Component<IPlayerProps, IPlayerState> 
 
   private player: YouTubePlayer;
   private progressBar: HTMLElement;
+  private progressContainer: HTMLElement;
   private titleOverlay: HTMLElement;
   private progressBarWidth: number;
 }
