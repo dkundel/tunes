@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "outDir": "out",
+    "sourceMap": true,
+    "jsx": "react"
+  },
+  "files": [
+    "typings/tsd.d.ts",
+    "scripts/main.ts",
+    "scripts/index.tsx"
+  ]
+}

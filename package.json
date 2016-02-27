@@ -1,0 +1,48 @@
+{
+  "name": "tunes",
+  "version": "1.0.0",
+  "description": "A player for music via YouTube in Electron",
+  "main": "out/main.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dkundel/tunes.git"
+  },
+  "author": "Dominik Kundel <dominik.kundel@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dkundel/tunes/issues"
+  },
+  "homepage": "https://github.com/dkundel/tunes#readme",
+  "devDependencies": {
+    "bower": "^1.7.7",
+    "browser-sync": "^2.11.1",
+    "electron-packager": "^5.2.1",
+    "electron-prebuilt": "^0.36.7",
+    "node-sass": "^3.4.2",
+    "npm-run-all": "^1.5.1",
+    "tsd": "^0.6.5"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deps:bower": "bower install",
+    "deps:tsd": "tsd install",
+    "deps": "npm-run-all -p deps:*",
+    "postinstall": "npm run deps",
+    "build:ts": "tsc -p .",
+    "build:html": "cp views/*.html out/",
+    "build:sass": "node-sass styles/*.scss -o out/",
+    "build": "npm-run-all -p build:*",
+    "watch:ts": "npm run build:ts -- --watch",
+    "watch:html": "npm run build:html",
+    "watch:sass": "npm run build:sass -- --watch",
+    "watch": "npm-run-all -p watch:*",
+    "start": "npm run build & npm run watch & electron ."
+  },
+  "dependencies": {
+    "menubar": "^4.0.2",
+    "moment": "^2.11.2",
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
+    "typescript": "^1.9.0-dev.20160216"
+  }
+}
