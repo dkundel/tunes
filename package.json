@@ -1,0 +1,111 @@
+{
+  "name": "tunes",
+  "productName": "tunes",
+  "version": "1.0.0",
+  "description": "My Electron application description",
+  "main": "src/index.ts",
+  "scripts": {
+    "commit": "git-cz",
+    "release": "standard-version",
+    "release:major": "npm run release -- --release-as major",
+    "release:minor": "npm run release -- --release-as minor",
+    "release:patch": "npm run release -- --release-as patch",
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "lint": "tslint src"
+  },
+  "keywords": [],
+  "author": "dkundel",
+  "license": "MIT",
+  "config": {
+    "forge": {
+      "make_targets": {
+        "win32": [
+          "squirrel"
+        ],
+        "darwin": [
+          "zip"
+        ],
+        "linux": [
+          "deb",
+          "rpm"
+        ]
+      },
+      "electronPackagerConfig": {},
+      "electronWinstallerConfig": {
+        "name": "tunes"
+      },
+      "electronInstallerDebian": {},
+      "electronInstallerRedhat": {},
+      "github_repository": {
+        "owner": "",
+        "name": ""
+      },
+      "windowsStoreConfig": {
+        "packageName": "",
+        "name": "tunes"
+      }
+    }
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/src"
+    ],
+    "transform": {
+      "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "mapCoverage": true,
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/src/.*(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 85
+      }
+    }
+  },
+  "dependencies": {
+    "@types/electron": "^1.4.38",
+    "@types/electron-devtools-installer": "^2.0.2",
+    "@types/menubar": "^5.1.3",
+    "@types/react": "^0.14.57",
+    "@types/react-dom": "^0.14.23",
+    "@types/react-redux": "^4.4.41",
+    "@types/redux": "^3.6.0",
+    "electron-compile": "^6.4.1",
+    "electron-devtools-installer": "^2.2.0",
+    "menubar": "^5.2.3",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-hot-loader": "^3.0.0-beta.7",
+    "react-redux": "^5.0.5",
+    "redux": "^3.6.0",
+    "tslib": "^1.7.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^19.2.4",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-preset-env": "^1.5.1",
+    "babel-preset-react": "^6.24.1",
+    "commitizen": "^2.9.6",
+    "cz-conventional-changelog": "^2.0.0",
+    "electron-forge": "^3.0.3",
+    "electron-prebuilt-compile": "1.6.11",
+    "jest": "^20.0.4",
+    "standard-version": "^4.0.0",
+    "ts-jest": "^20.0.5",
+    "tslint": "^4.2.0",
+    "typescript": "~2.1.4"
+  }
+}
