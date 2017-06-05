@@ -1,11 +1,8 @@
 import * as React from 'react';
+import Player from './components/Player';
 
 export class App extends React.Component<undefined, undefined> {
   render() {
-    return (
-      <div>
-        <h2>Welcome to React with Typescript in Electron!</h2>
-      </div>
-    );
+    return <Player />;
   }
 }

@@ -1,24 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="styles/main.css">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 </head>
-<body style="overflow: hidden; background-color: rgba(0,0,0,0); margin: 0" >
+
+<body style="overflow: hidden; background-color: rgba(0,0,0,0); margin: 0">
   <div id="App"></div>
 </body>
 
-<script>window.exports = module.exports</script>
-<script type="text/tsx">
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import {AppContainer} from 'react-hot-loader';
-
-let render = () => {
-  const { App } = require('./app');
-  ReactDOM.render(<AppContainer><App /></AppContainer>, document.getElementById('App'));
-}
-
-render();
-if (module.hot) { module.hot.accept(render); }
+<script>
+  window.exports = module.exports
 </script>
+<script type="text/tsx">
+  import './main';
+</script>
+
 </html>

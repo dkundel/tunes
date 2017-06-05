@@ -20,7 +20,7 @@ const mb = menubar({
   preloadWindow: true,
   alwaysOnTop: true,
   tooltip: '🎵 Toggle Tunes',
-  resizable: false
+  resizable: !!isDevMode
 });
 
 const { app } = mb;
