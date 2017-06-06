@@ -1,6 +1,9 @@
 import { globalShortcut, clipboard, ipcMain } from 'electron';
 import * as menubar from 'menubar';
-import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
+import installExtension, {
+  REACT_DEVELOPER_TOOLS,
+  REDUX_DEVTOOLS
+} from 'electron-devtools-installer';
 import { enableLiveReload } from 'electron-compile';
 import { parse } from 'url';
 
@@ -26,8 +29,12 @@ const mb = menubar({
 
 const { app } = mb;
 
-mb.on('ready', () => {
+mb.on('ready', async () => {
   registerHandlers();
+  if (isDevMode) {
+    await installExtension(REACT_DEVELOPER_TOOLS);
+    await installExtension(REDUX_DEVTOOLS);
+  }
 });
 
 mb.on('after-show', () => {
@@ -38,9 +45,8 @@ mb.on('after-hide', () => {
   isVisible = false;
 });
 
-mb.on('after-create-window', async () => {
+mb.on('after-create-window', () => {
   if (isDevMode) {
-    await installExtension(REACT_DEVELOPER_TOOLS);
     mb.window.webContents.openDevTools();
   }
 });
