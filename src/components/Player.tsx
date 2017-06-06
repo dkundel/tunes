@@ -1,30 +1,71 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-
+import { ipcRenderer } from 'electron';
 import * as moment from 'moment';
 
-import { togglePlayer } from '../actions';
-import { GlobalState, SongInfo, CurrentPlayerStatus } from '../reducers';
+import {
+  togglePlayer,
+  nextSong,
+  prevSong,
+  loadPlayList,
+  addSong
+} from '../actions';
+import { GlobalState, SongInfo, PlayerStatus } from '../reducers';
 import { getCurrentSongInfo, getPlayerStatus } from '../reducers/player';
 
 import BlurryYouTubeBackground from './BlurryYouTubeBackground';
 import PlayerButton from './PlayerButton';
 import PlayerProgressBar from './PlayerProgressBar';
+import YouTubePlayer from './YouTubePlayer';
 
 export interface PlayerProps {
   currentSongInfo: SongInfo;
-  playerStatus: CurrentPlayerStatus;
+  playerStatus: PlayerStatus;
+  togglePlayer: () => any;
+  nextSong: () => any;
+  prevSong: () => any;
+  loadPlayList: (playList: string) => any;
+  addSong: (playList: string) => any;
 }
 
 class Player extends React.Component<PlayerProps, undefined> {
   constructor(props: PlayerProps) {
     super(props);
     this.togglePlayPause = this.togglePlayPause.bind(this);
+    this.nextSong = this.nextSong.bind(this);
+    this.prevSong = this.prevSong.bind(this);
+  }
+
+  public componentDidMount() {
+    // this.props.loadPlayList('PLpyrjJvJ7GJ4i-2v0kVohE1cWJs12TjDF');
+    ipcRenderer.on('player:toggle', () => {
+      this.togglePlayPause();
+    });
+    ipcRenderer.on('player:prev', () => {
+      this.prevSong();
+    });
+    ipcRenderer.on('player:next', () => {
+      this.nextSong();
+    });
+    ipcRenderer.on('player:load:playlist', (_: any, playList: string) => {
+      this.props.loadPlayList(playList);
+    });
+    ipcRenderer.on('player:load:video', (_: any, song: string) => {
+      this.props.addSong(song);
+    });
   }
 
   private togglePlayPause() {
-    console.log('Play/Pause');
+    this.props.togglePlayer();
+  }
+
+  private nextSong() {
+    this.props.nextSong();
+  }
+
+  private prevSong() {
+    this.props.prevSong();
   }
 
   private hasSongInfo(): boolean {
@@ -36,7 +77,15 @@ class Player extends React.Component<PlayerProps, undefined> {
       this.props.currentSongInfo.currentTime
       ? this.props.currentSongInfo.currentTime
       : 0;
-    return moment({ seconds: timeInSeconds }).format('mm:ss');
+
+    const format = timeInSeconds >= 60 * 60 ? 'H:mm:ss' : 'mm:ss';
+    return moment({
+      hours: 0,
+      minutes: 0,
+      seconds: 0
+    })
+      .seconds(timeInSeconds)
+      .format(format);
   }
 
   private getPercentage(): number {
@@ -87,8 +136,14 @@ class Player extends React.Component<PlayerProps, undefined> {
               onClick={() => this.togglePlayPause()}
               materialIcon={this.getPlayButtonIcon()}
             />
-            <PlayerButton materialIcon="skip_previous" />
-            <PlayerButton materialIcon="skip_next" />
+            <PlayerButton
+              onClick={() => this.prevSong()}
+              materialIcon="skip_previous"
+            />
+            <PlayerButton
+              onClick={() => this.nextSong()}
+              materialIcon="skip_next"
+            />
           </div>
           <PlayerProgressBar
             percentage={this.getPercentage()}
@@ -101,7 +156,7 @@ class Player extends React.Component<PlayerProps, undefined> {
           </div>
         </div>
         <BlurryYouTubeBackground videoId={this.getVideoId()} />
-        <div id="youtubePlayer" />
+        <YouTubePlayer />
       </div>
     );
   }
@@ -112,6 +167,12 @@ const mapStateToProps = (state: GlobalState) => ({
   playerStatus: getPlayerStatus(state)
 });
 
-const mapDispatchToProps = () => ({});
+const mapDispatchToProps = (dispatch: Dispatch<undefined>) => ({
+  togglePlayer: () => dispatch(togglePlayer()),
+  nextSong: () => dispatch(nextSong()),
+  prevSong: () => dispatch(prevSong()),
+  loadPlayList: (playList: string) => dispatch(loadPlayList(playList)),
+  addSong: (song: string) => dispatch(addSong(song))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);

@@ -1,4 +1,9 @@
-export type CurrentPlayerStatus = 'stopped' | 'paused' | 'playing' | 'loading';
+export type PlayerStatus =
+  | 'stopped'
+  | 'paused'
+  | 'playing'
+  | 'loading'
+  | undefined;
 
 export interface SongInfo {
   title: string;
@@ -11,8 +16,10 @@ export interface SongInfo {
 export interface PlayerState {
   currentSong: SongInfo | undefined;
   currentPlayList: string | undefined;
-  currentPlayerStatus: CurrentPlayerStatus;
+  currentPlayerStatus: PlayerStatus;
   songQueue: string[];
+  queueIndex: number | undefined;
+  nextPlayerStatus: PlayerStatus;
 }
 
 export interface GlobalState {

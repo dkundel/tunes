@@ -1,7 +1,8 @@
-import { globalShortcut } from 'electron';
+import { globalShortcut, clipboard, ipcMain } from 'electron';
 import * as menubar from 'menubar';
 import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 import { enableLiveReload } from 'electron-compile';
+import { parse } from 'url';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -26,15 +27,7 @@ const mb = menubar({
 const { app } = mb;
 
 mb.on('ready', () => {
-  console.log(`Let's go!`);
-
-  globalShortcut.register('CmdOrCtrl+Shift+U', () => {
-    if (isVisible) {
-      mb.hideWindow();
-    } else {
-      mb.showWindow();
-    }
-  });
+  registerHandlers();
 });
 
 mb.on('after-show', () => {
@@ -55,3 +48,37 @@ mb.on('after-create-window', async () => {
 app.on('before-quit', () => {
   globalShortcut.unregisterAll();
 });
+
+function registerHandlers() {
+  const web = mb.window.webContents;
+  globalShortcut.register('CmdOrCtrl+Shift+U', () => {
+    if (isVisible) {
+      mb.hideWindow();
+    } else {
+      mb.showWindow();
+    }
+  });
+
+  globalShortcut.register('MediaPlayPause', () => {
+    web.send('player:toggle');
+  });
+
+  globalShortcut.register('MediaPreviousTrack', () => {
+    web.send('player:prev');
+  });
+
+  globalShortcut.register('MediaNextTrack', () => {
+    web.send('player:next');
+  });
+
+  globalShortcut.register('CmdOrCtrl+Shift+Y', () => {
+    let ytUrl = parse(clipboard.readText(), true);
+    if (ytUrl && ytUrl.query) {
+      if (ytUrl.query.list) {
+        web.send('player:load:playlist', ytUrl.query.list);
+      } else if (ytUrl.query.v) {
+        web.send('player:load:video', ytUrl.query.v);
+      }
+    }
+  });
+}
