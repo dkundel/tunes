@@ -74,9 +74,7 @@ class YouTubePlayer extends React.Component<YouTubePlayerProps, undefined> {
         };
         new YT.Player(YOUTUBE_PLAYER_DOM_ID, defaultOptions);
       } else {
-        if (this.props.nextStatus === 'playing') {
-          this.player.playVideoAt(this.props.queueIndex || 0);
-        }
+        this.player.playVideoAt(this.props.queueIndex || 0);
       }
     } else if (this.props.currentQueue && this.props.queueIndex !== undefined) {
       defaultOptions.videoId = this.props.currentQueue[this.props.queueIndex];
@@ -118,7 +116,7 @@ class YouTubePlayer extends React.Component<YouTubePlayerProps, undefined> {
     }
   }
 
-  private onError(evt: YT.OnErrorEvent) {
+  private onError() {
     // TODO: track blocked videos
     if (this.props.nextSong) {
       this.props.nextSong();
@@ -193,12 +191,17 @@ class YouTubePlayer extends React.Component<YouTubePlayerProps, undefined> {
   }
 
   public componentDidUpdate() {
-    this.loadVideo();
+    if (
+      this.props.nextStatus === 'loading' ||
+      this.props.nextStatus === 'playing'
+    ) {
+      this.loadVideo();
+    }
 
     if (this.player) {
       const ytPlayerState = this.player.getPlayerState();
       if (
-        (this.props.nextStatus === 'playing' &&
+        (this.props.nextStatus === 'resuming' &&
           ytPlayerState === YT.PlayerState.PAUSED) ||
         ytPlayerState === YT.PlayerState.ENDED
       ) {

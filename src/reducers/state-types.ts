@@ -3,6 +3,7 @@ export type PlayerStatus =
   | 'paused'
   | 'playing'
   | 'loading'
+  | 'resuming'
   | undefined;
 
 export interface SongInfo {

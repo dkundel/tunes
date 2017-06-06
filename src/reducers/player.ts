@@ -52,7 +52,7 @@ export default function(state: PlayerState = initialState, action: Action) {
       } else if (newState.currentPlayList) {
         newState.queueIndex = newState.queueIndex + 1;
       }
-      newState.nextPlayerStatus = 'playing';
+      newState.nextPlayerStatus = 'loading';
       break;
     case PREV_SONG:
       newState.queueIndex = newState.queueIndex || 0;
@@ -66,13 +66,13 @@ export default function(state: PlayerState = initialState, action: Action) {
       if (newState.queueIndex < 0) {
         newState.queueIndex = 0;
       }
-      newState.nextPlayerStatus = 'playing';
+      newState.nextPlayerStatus = 'loading';
       break;
     case TOGGLE_PLAYER:
       if (newState.currentPlayerStatus === 'playing') {
         newState.nextPlayerStatus = 'paused';
       } else {
-        newState.nextPlayerStatus = 'playing';
+        newState.nextPlayerStatus = 'resuming';
       }
       break;
     case PROGRESS_SONG:
@@ -90,6 +90,7 @@ export default function(state: PlayerState = initialState, action: Action) {
       break;
     case LOAD_PLAYLIST:
       newState.currentPlayList = (action as LoadPlayListAction).playList;
+      newState.nextPlayerStatus = 'playing';
       break;
     case SET_QUEUE_INDEX:
       newState.queueIndex = (action as SetQueueIndexAction).index;
