@@ -7,7 +7,7 @@
   "scripts": {
     "clean": "rimraf out",
     "commit": "git-cz",
-    "generate:icons": "electron-icon-maker --input ./resources/app-icon.png --output ./resources",
+    "generate:icons": "electron-icon-maker --input ./resources/app-icon.png --output ./resources && mv resources/icons/mac/icon.icns resources/icons && mv resources/icons/win/icon.ico resources/icons && rimraf resources/icons/mac && rimraf resources/icons/win",
     "lint": "tslint src",
     "make": "electron-forge make",
     "package:mac": "electron-forge package --platform=darwin",
@@ -36,7 +36,7 @@
         ]
       },
       "electronPackagerConfig": {
-        "icon": "resources/icons/mac/icon.icns"
+        "icon": "resources/icons/icon"
       },
       "electronWinstallerConfig": {
         "name": "tunes"
