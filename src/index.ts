@@ -37,6 +37,9 @@ mb.on('ready', async () => {
       mb.tray.popUpContextMenu(contextMenu);
     }
   });
+  mb.tray.on('right-click', () => {
+    mb.tray.popUpContextMenu(contextMenu);
+  });
 
   registerHandlers();
   if (isDevMode) {
