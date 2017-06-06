@@ -1,3 +1,6 @@
+import { Action } from 'redux';
+import { ipcRenderer } from 'electron';
+
 import {
   ADD_SONG,
   NEXT_SONG,
@@ -15,8 +18,6 @@ import {
   SetSongInfoAtion,
   ProgressSongAction
 } from '../actions';
-
-import { Action } from 'redux';
 
 import {
   PlayerStatus,
@@ -87,6 +88,11 @@ export default function(state: PlayerState = initialState, action: Action) {
     case CHANGE_PLAYER_STATUS:
       newState.nextPlayerStatus = undefined;
       newState.currentPlayerStatus = (action as ChangePlayerStatusAction).status;
+      if (newState.currentPlayerStatus === 'playing') {
+        ipcRenderer.send('tray:icon', 'playing');
+      } else {
+        ipcRenderer.send('tray:icon', 'default');
+      }
       break;
     case LOAD_PLAYLIST:
       newState.currentPlayList = (action as LoadPlayListAction).playList;

@@ -1,5 +1,6 @@
-import { globalShortcut, clipboard, ipcMain } from 'electron';
+import { globalShortcut, clipboard, ipcMain, Menu, MenuItem } from 'electron';
 import * as menubar from 'menubar';
+import * as path from 'path';
 import installExtension, {
   REACT_DEVELOPER_TOOLS,
   REDUX_DEVTOOLS
@@ -7,11 +8,10 @@ import installExtension, {
 import { enableLiveReload } from 'electron-compile';
 import { parse } from 'url';
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
-// let mainWindow: Electron.BrowserWindow | null = null;
-
 const isDevMode = process.execPath.match(/[\\/]electron/);
+
+const PLAYING_ICON = path.join(__dirname, 'icon-active.png');
+const DEFAULT_ICON = path.join(__dirname, 'icon.png');
 
 if (isDevMode) enableLiveReload({ strategy: 'react-hmr' });
 
@@ -24,12 +24,20 @@ const mb = menubar({
   preloadWindow: true,
   alwaysOnTop: true,
   tooltip: '🎵 Toggle Tunes',
-  resizable: !!isDevMode
+  resizable: !!isDevMode,
+  icon: DEFAULT_ICON
 });
 
 const { app } = mb;
 
 mb.on('ready', async () => {
+  const contextMenu = getContextMenu();
+  mb.tray.on('click', (evt: any) => {
+    if (evt.altKey) {
+      mb.tray.popUpContextMenu(contextMenu);
+    }
+  });
+
   registerHandlers();
   if (isDevMode) {
     await installExtension(REACT_DEVELOPER_TOOLS);
@@ -87,4 +95,43 @@ function registerHandlers() {
       }
     }
   });
+}
+
+type IconType = 'playing' | 'default';
+
+ipcMain.on('tray:icon', (_: any, iconType: IconType) => {
+  const pathToIcon = iconType === 'playing' ? PLAYING_ICON : DEFAULT_ICON;
+  mb.tray.setImage(pathToIcon);
+});
+
+function getContextMenu() {
+  const separator = new MenuItem({ type: 'separator' });
+  const menu = new Menu();
+  menu.append(
+    new MenuItem({
+      label: 'About 🎵 tunes'
+    })
+  );
+  menu.append(separator);
+  menu.append(
+    new MenuItem({
+      label: 'Deactivate Global Keybindings',
+      type: 'checkbox',
+      checked: true,
+      click(item: Electron.MenuItem) {
+        if (!item.checked) {
+          console.log('unregister');
+          item.label = 'Activate Global Keybindings';
+          globalShortcut.unregisterAll();
+        } else {
+          item.label = 'Deactivate Global Keybindings';
+          console.log('register');
+          registerHandlers();
+        }
+      }
+    })
+  );
+  menu.append(separator);
+  menu.append(new MenuItem({ role: 'quit', label: 'Quit 🎵 tunes' }));
+  return menu;
 }
