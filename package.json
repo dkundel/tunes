@@ -5,15 +5,18 @@
   "description": "My Electron application description",
   "main": "src/index.ts",
   "scripts": {
+    "clean": "rimraf out",
     "commit": "git-cz",
-    "release": "standard-version",
+    "generate:icons": "electron-icon-maker --input ./resources/app-icon.png --output ./resources",
+    "lint": "tslint src",
+    "make": "electron-forge make",
+    "package:mac": "electron-forge package --platform=darwin",
+    "package": "electron-forge package",
     "release:major": "npm run release -- --release-as major",
     "release:minor": "npm run release -- --release-as minor",
     "release:patch": "npm run release -- --release-as patch",
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "lint": "tslint src"
+    "release": "standard-version",
+    "start": "electron-forge start"
   },
   "keywords": [],
   "author": "dkundel",
@@ -32,7 +35,9 @@
           "rpm"
         ]
       },
-      "electronPackagerConfig": {},
+      "electronPackagerConfig": {
+        "icon": "resources/icons/mac/icon.icns"
+      },
       "electronWinstallerConfig": {
         "name": "tunes"
       },
@@ -113,8 +118,10 @@
     "commitizen": "^2.9.6",
     "cz-conventional-changelog": "^2.0.0",
     "electron-forge": "^3.0.3",
+    "electron-icon-maker": "0.0.3",
     "electron-prebuilt-compile": "1.6.11",
     "jest": "^20.0.4",
+    "rimraf": "^2.6.1",
     "standard-version": "^4.0.0",
     "ts-jest": "^20.0.5",
     "tslint": "^4.2.0",
