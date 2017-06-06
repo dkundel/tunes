@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { ipcRenderer } from 'electron';
 import * as moment from 'moment';
+import styled from 'styled-components';
 
 import {
   togglePlayer,
@@ -129,9 +130,9 @@ class Player extends React.Component<PlayerProps, undefined> {
 
   public render() {
     return (
-      <div className="player">
-        <div className="player-bar">
-          <div className="player-buttonGroup">
+      <PlayerContainer>
+        <PlayerBar>
+          <PlayerButtonGroup>
             <PlayerButton
               onClick={() => this.togglePlayPause()}
               materialIcon={this.getPlayButtonIcon()}
@@ -144,23 +145,45 @@ class Player extends React.Component<PlayerProps, undefined> {
               onClick={() => this.nextSong()}
               materialIcon="skip_next"
             />
-          </div>
+          </PlayerButtonGroup>
           <PlayerProgressBar
             percentage={this.getPercentage()}
             title={this.getTitle()}
           />
-          <div className="player-metabar">
-            <p className="player-time">
+          <PlayerMetaBar>
+            <PlayerTimer>
               {this.getTimeString()}
-            </p>
-          </div>
-        </div>
+            </PlayerTimer>
+          </PlayerMetaBar>
+        </PlayerBar>
         <BlurryYouTubeBackground videoId={this.getVideoId()} />
         <YouTubePlayer />
-      </div>
+      </PlayerContainer>
     );
   }
 }
+
+const PlayerContainer = styled.div`
+  width: 100%;
+`;
+
+const PlayerBar = styled.div`
+  display: flex;
+  color: var(--colorPrimary);
+  background: rgba(255, 255, 255, 0.3);
+`;
+
+const PlayerButtonGroup = styled.div``;
+
+const PlayerMetaBar = styled.div`
+  background: var(--colorPrimary);
+  color: var(--colorSecondary);
+`;
+
+const PlayerTimer = styled.p`
+  margin-left: 15px;
+  margin-right: 15px;
+`;
 
 const mapStateToProps = (state: GlobalState) => ({
   currentSongInfo: getCurrentSongInfo(state),

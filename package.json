@@ -10,7 +10,6 @@
     "release:major": "npm run release -- --release-as major",
     "release:minor": "npm run release -- --release-as minor",
     "release:patch": "npm run release -- --release-as patch",
-    "build:styles": "node-sass src/styles/main.scss src/styles/main.css",
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
@@ -103,6 +102,7 @@
     "redux": "^3.6.0",
     "redux-devtools-extension": "^2.13.2",
     "redux-logger": "^3.0.6",
+    "styled-components": "^2.0.0",
     "tslib": "^1.7.1"
   },
   "devDependencies": {
@@ -115,7 +115,6 @@
     "electron-forge": "^3.0.3",
     "electron-prebuilt-compile": "1.6.11",
     "jest": "^20.0.4",
-    "node-sass": "^4.5.3",
     "standard-version": "^4.0.0",
     "ts-jest": "^20.0.5",
     "tslint": "^4.2.0",
