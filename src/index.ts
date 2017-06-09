@@ -118,17 +118,13 @@ function getContextMenu() {
   menu.append(separator);
   menu.append(
     new MenuItem({
-      label: 'Deactivate Global Keybindings',
+      label: 'Active Global Keybindings',
       type: 'checkbox',
       checked: true,
       click(item: Electron.MenuItem) {
         if (!item.checked) {
-          console.log('unregister');
-          item.label = 'Activate Global Keybindings';
           globalShortcut.unregisterAll();
         } else {
-          item.label = 'Deactivate Global Keybindings';
-          console.log('register');
           registerHandlers();
         }
       }
