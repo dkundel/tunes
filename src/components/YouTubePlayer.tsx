@@ -6,7 +6,7 @@ import { GlobalState, PlayerStatus, SongInfo } from '../reducers';
 import {
   getPlayerStatus,
   getCurrentQueue,
-  getCurrentPlayList,
+  getCurrentPlaylist,
   getQueueIndex,
   getNextPlayerStatus
 } from '../reducers/player';
@@ -16,12 +16,12 @@ import {
   nextSong,
   setSongInfo,
   setProgress
-} from '../actions';
+} from '../actions/PlayerActions';
 
 export const YOUTUBE_PLAYER_DOM_ID = 'youTubePlayer';
 
 export interface YouTubePlayerProps {
-  currentPlayList?: string | undefined;
+  currentPlaylist?: string | undefined;
   playerStatus?: PlayerStatus;
   currentQueue?: string[] | undefined;
   nextStatus?: PlayerStatus;
@@ -45,13 +45,16 @@ export type YouTubeVideoData = {
   video_quality: string;
 };
 
-interface extendedYTPlayer extends YT.Player {
+export interface extendedYTPlayer extends YT.Player {
   getVideoData(): YouTubeVideoData;
 }
 
-type YTOnReadyEvent = { target: extendedYTPlayer };
+export type YTOnReadyEvent = { target: extendedYTPlayer };
 
-class YouTubePlayer extends React.Component<YouTubePlayerProps, undefined> {
+export class YouTubePlayer extends React.Component<
+  YouTubePlayerProps,
+  undefined
+> {
   private player: extendedYTPlayer | null;
   private timer: NodeJS.Timer | undefined;
 
@@ -67,10 +70,10 @@ class YouTubePlayer extends React.Component<YouTubePlayerProps, undefined> {
       videoId: ''
     };
 
-    if (this.props.currentPlayList) {
+    if (this.props.currentPlaylist) {
       if (this.player === null) {
         defaultOptions.playerVars = {
-          list: this.props.currentPlayList
+          list: this.props.currentPlaylist
         };
         new YT.Player(YOUTUBE_PLAYER_DOM_ID, defaultOptions);
       } else {
@@ -141,7 +144,7 @@ class YouTubePlayer extends React.Component<YouTubePlayerProps, undefined> {
     } else */
     if (evt.data === YT.PlayerState.PLAYING) {
       this.props.updatePlayerStatus('playing');
-      if (this.props.currentPlayList) {
+      if (this.props.currentPlaylist) {
         this.props.updateQueueIndex(this.player.getPlaylistIndex());
       }
       const videoData = this.player.getVideoData();
@@ -185,7 +188,7 @@ class YouTubePlayer extends React.Component<YouTubePlayerProps, undefined> {
   }
 
   public componentWillUpdate(nextProps: YouTubePlayerProps) {
-    if (nextProps.currentPlayList !== this.props.currentPlayList) {
+    if (nextProps.currentPlaylist !== this.props.currentPlaylist) {
       this.player = null;
     }
   }
@@ -226,7 +229,7 @@ class YouTubePlayer extends React.Component<YouTubePlayerProps, undefined> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  currentPlayList: getCurrentPlayList(state),
+  currentPlaylist: getCurrentPlaylist(state),
   playerStatus: getPlayerStatus(state),
   currentQueue: getCurrentQueue(state),
   queueIndex: getQueueIndex(state),

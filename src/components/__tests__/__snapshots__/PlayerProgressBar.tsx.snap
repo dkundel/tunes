@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test PlayerProgressBar component handles correct props 1`] = `
+<div
+  className="sc-bdVaJa lgaJyD"
+>
+  <p
+    className="sc-bwzfXH cXyljP"
+  >
+    My Unit Test
+  </p>
+  <div
+    className="sc-bxivhb fvFpMe"
+    style={
+      Object {
+        "--percentage": "100%",
+      }
+    }
+  />
+  <div
+    className="sc-ifAKCX jeMYHp"
+    style={
+      Object {
+        "--percentage": "100%",
+      }
+    }
+  >
+    <p
+      className="sc-htpNat kCUXQt"
+    >
+      My Unit Test
+    </p>
+  </div>
+</div>
+`;

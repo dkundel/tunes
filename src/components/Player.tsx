@@ -9,9 +9,9 @@ import {
   togglePlayer,
   nextSong,
   prevSong,
-  loadPlayList,
+  loadPlaylist,
   addSong
-} from '../actions';
+} from '../actions/PlayerActions';
 import { GlobalState, SongInfo, PlayerStatus } from '../reducers';
 import { getCurrentSongInfo, getPlayerStatus } from '../reducers/player';
 
@@ -26,11 +26,11 @@ export interface PlayerProps {
   togglePlayer: () => any;
   nextSong: () => any;
   prevSong: () => any;
-  loadPlayList: (playList: string) => any;
-  addSong: (playList: string) => any;
+  loadPlaylist: (playlist: string) => any;
+  addSong: (playlist: string) => any;
 }
 
-class Player extends React.Component<PlayerProps, undefined> {
+export class Player extends React.Component<PlayerProps, undefined> {
   constructor(props: PlayerProps) {
     super(props);
     this.togglePlayPause = this.togglePlayPause.bind(this);
@@ -49,8 +49,8 @@ class Player extends React.Component<PlayerProps, undefined> {
     ipcRenderer.on('player:next', () => {
       this.nextSong();
     });
-    ipcRenderer.on('player:load:playlist', (_: any, playList: string) => {
-      this.props.loadPlayList(playList);
+    ipcRenderer.on('player:load:playlist', (_: any, playlist: string) => {
+      this.props.loadPlaylist(playlist);
     });
     ipcRenderer.on('player:load:video', (_: any, song: string) => {
       this.props.addSong(song);
@@ -194,7 +194,7 @@ const mapDispatchToProps = (dispatch: Dispatch<undefined>) => ({
   togglePlayer: () => dispatch(togglePlayer()),
   nextSong: () => dispatch(nextSong()),
   prevSong: () => dispatch(prevSong()),
-  loadPlayList: (playList: string) => dispatch(loadPlayList(playList)),
+  loadPlayList: (playlist: string) => dispatch(loadPlaylist(playlist)),
   addSong: (song: string) => dispatch(addSong(song))
 });
 

@@ -1,5 +1,5 @@
 import { Action } from 'redux';
-import { PlayerStatus, SongInfo } from './reducers/state-types';
+import { PlayerStatus, SongInfo } from '../reducers/state-types';
 
 export const ADD_SONG = 'ADD_SONG';
 export const NEXT_SONG = 'NEXT_SONG';
@@ -16,8 +16,8 @@ export interface AddSongAction extends Action {
   song: string;
 }
 
-export interface LoadPlayListAction extends Action {
-  playList: string;
+export interface LoadPlaylistAction extends Action {
+  playlist: string;
 }
 
 export interface ChangePlayerStatusAction extends Action {
@@ -44,9 +44,9 @@ export const addSong = (song: string) => ({ type: ADD_SONG, song });
 export const nextSong = () => ({ type: NEXT_SONG });
 export const prevSong = () => ({ type: PREV_SONG });
 export const togglePlayer = () => ({ type: TOGGLE_PLAYER });
-export const loadPlayList = (playList: string) => ({
+export const loadPlaylist = (playlist: string) => ({
   type: LOAD_PLAYLIST,
-  playList
+  playlist
 });
 export const changePlayerStatus = (status: PlayerStatus) => ({
   type: CHANGE_PLAYER_STATUS,

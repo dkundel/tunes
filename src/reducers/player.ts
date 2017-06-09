@@ -1,4 +1,3 @@
-import { Action } from 'redux';
 import { ipcRenderer } from 'electron';
 
 import {
@@ -13,11 +12,11 @@ import {
   SET_SONG_INFO,
   AddSongAction,
   ChangePlayerStatusAction,
-  LoadPlayListAction,
+  LoadPlaylistAction,
   SetQueueIndexAction,
   SetSongInfoAtion,
   ProgressSongAction
-} from '../actions';
+} from '../actions/PlayerActions';
 
 import {
   PlayerStatus,
@@ -28,14 +27,14 @@ import {
 
 const initialState: PlayerState = {
   currentSong: undefined,
-  currentPlayList: undefined,
+  currentPlaylist: undefined,
   currentPlayerStatus: 'stopped',
   songQueue: [],
   queueIndex: undefined,
   nextPlayerStatus: undefined
 };
 
-export default function(state: PlayerState = initialState, action: Action) {
+export default function(state: PlayerState = initialState, action: any) {
   const newState = Object.assign({}, state);
 
   switch (action.type) {
@@ -50,7 +49,7 @@ export default function(state: PlayerState = initialState, action: Action) {
       if (Array.isArray(newState.songQueue) && newState.songQueue.length > 0) {
         newState.queueIndex =
           (newState.queueIndex + 1) % newState.songQueue.length;
-      } else if (newState.currentPlayList) {
+      } else if (newState.currentPlaylist) {
         newState.queueIndex = newState.queueIndex + 1;
       }
       newState.nextPlayerStatus = 'loading';
@@ -61,7 +60,7 @@ export default function(state: PlayerState = initialState, action: Action) {
         newState.queueIndex =
           (newState.queueIndex - 1 + newState.songQueue.length) %
           newState.songQueue.length;
-      } else if (newState.currentPlayList) {
+      } else if (newState.currentPlaylist) {
         newState.queueIndex = newState.queueIndex - 1;
       }
       if (newState.queueIndex < 0) {
@@ -95,7 +94,7 @@ export default function(state: PlayerState = initialState, action: Action) {
       }
       break;
     case LOAD_PLAYLIST:
-      newState.currentPlayList = (action as LoadPlayListAction).playList;
+      newState.currentPlaylist = (action as LoadPlaylistAction).playlist;
       newState.nextPlayerStatus = 'playing';
       break;
     case SET_QUEUE_INDEX:
@@ -121,8 +120,8 @@ export const getCurrentQueue = (state: GlobalState): string[] => {
   return state.player.songQueue;
 };
 
-export const getCurrentPlayList = (state: GlobalState): string | undefined => {
-  return state.player.currentPlayList;
+export const getCurrentPlaylist = (state: GlobalState): string | undefined => {
+  return state.player.currentPlaylist;
 };
 
 export const getQueueIndex = (state: GlobalState): number | undefined => {

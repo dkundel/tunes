@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test PlayerButton component handles empty materialIcon correctly 1`] = `
+<button
+  className="sc-bdVaJa jGqIse"
+  onClick={[Function]}
+>
+  <i
+    className="material-icons"
+  >
+    help_outline
+  </i>
+</button>
+`;
+
+exports[`test PlayerButton component handles materialIcon correctly 1`] = `
+<button
+  className="sc-bdVaJa jGqIse"
+  onClick={[Function]}
+>
+  <i
+    className="material-icons"
+  >
+    search
+  </i>
+</button>
+`;

@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test BlurryYouTubeBackground component handles empty videoId 1`] = `
+<img
+  className="player-background blur-background sc-bdVaJa boBCaA"
+  src="https://img.youtube.com/vi/testid/default.jpg"
+/>
+`;
+
+exports[`test BlurryYouTubeBackground component handles videoId correctly 1`] = `
+<img
+  className="player-background blur-background sc-bdVaJa boBCaA"
+  src="https://img.youtube.com/vi/testid/default.jpg"
+/>
+`;

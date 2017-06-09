@@ -16,7 +16,7 @@ export interface SongInfo {
 
 export interface PlayerState {
   currentSong: SongInfo | undefined;
-  currentPlayList: string | undefined;
+  currentPlaylist: string | undefined;
   currentPlayerStatus: PlayerStatus;
   songQueue: string[];
   queueIndex: number | undefined;

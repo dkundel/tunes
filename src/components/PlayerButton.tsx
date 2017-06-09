@@ -25,7 +25,10 @@ export default class PlayerButton extends React.Component<
 > {
   public render() {
     return (
-      <StyledButton onClick={() => this.props.onClick && this.props.onClick()}>
+      <StyledButton
+        onClick={(...args: any[]) =>
+          this.props.onClick && this.props.onClick(...args)}
+      >
         <i className="material-icons">
           {this.props.materialIcon || 'help_outline'}
         </i>

@@ -5,6 +5,7 @@
   "description": "My Electron application description",
   "main": "src/index.ts",
   "scripts": {
+    "test": "jest",
     "clean": "rimraf out",
     "commit": "git-cz",
     "generate:icons": "electron-icon-maker --input ./resources/app-icon.png --output ./resources && mv resources/icons/mac/icon.icns resources/icons && mv resources/icons/win/icon.ico resources/icons && rimraf resources/icons/mac && rimraf resources/icons/win",
@@ -118,7 +119,9 @@
     "tslib": "^1.7.1"
   },
   "devDependencies": {
+    "@types/enzyme": "^2.8.0",
     "@types/jest": "^19.2.4",
+    "@types/react-test-renderer": "^15.5.0",
     "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-preset-env": "^1.5.1",
     "babel-preset-react": "^6.24.1",
@@ -127,10 +130,12 @@
     "electron-forge": "^3.0.3",
     "electron-icon-maker": "0.0.3",
     "electron-prebuilt-compile": "1.6.11",
+    "enzyme": "^2.8.2",
     "jest": "^20.0.4",
+    "react-test-renderer": "^15.5.4",
     "rimraf": "^2.6.1",
     "standard-version": "^4.0.0",
-    "ts-jest": "^20.0.5",
+    "ts-jest": "^20.0.6",
     "tslint": "^4.2.0",
     "typescript": "~2.1.4"
   }
