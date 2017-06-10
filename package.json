@@ -92,17 +92,13 @@
     }
   },
   "dependencies": {
-    "@types/electron": "^1.4.38",
     "@types/electron-config": "^0.2.1",
     "@types/electron-devtools-installer": "^2.0.2",
     "@types/menubar": "^5.1.3",
-    "@types/moment": "^2.13.0",
     "@types/react": "^0.14.57",
     "@types/react-dom": "^0.14.23",
     "@types/react-hot-loader": "^3.0.1",
     "@types/react-redux": "^4.4.41",
-    "@types/redux": "^3.6.0",
-    "@types/redux-devtools-extension": "^2.13.2",
     "@types/redux-logger": "^3.0.0",
     "@types/youtube": "0.0.29",
     "electron-compile": "^6.4.1",
