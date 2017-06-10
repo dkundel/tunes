@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import {  } from 'polished';
+import 'polished';
 import { remote } from 'electron';
 
 import { H1, P } from '../styles/components';
@@ -51,7 +51,7 @@ const CloseButton = styled.button`
   &:hover, &:focus {
     color: var(--colorPrimary);
   }
-`
+`;
 
 export default class About extends React.Component<any, any> {
   closeDialog() {
@@ -89,13 +89,13 @@ export default class About extends React.Component<any, any> {
                 href="https://github.com/dkundel/tunes"
                 target="_blank"
               >
-                https://github.com/dkundel/tunes
+                github.com/dkundel/tunes
               </ExternalLink>
             </InfoTableEntry>
           </InfoTableRow>
         </InfoTable>
         <CloseButton id="closeAbout" onClick={() => this.closeDialog()}>
-          <MaterialIcon icon="close"/>
+          <MaterialIcon icon="close" />
         </CloseButton>
       </Container>
     );

@@ -71,7 +71,7 @@ exports[`test About component verify snapshot 1`] = `
           onClick={[Function]}
           target="_blank"
         >
-          https://github.com/dkundel/tunes
+          github.com/dkundel/tunes
         </a>
       </div>
     </div>
