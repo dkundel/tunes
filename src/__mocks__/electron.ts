@@ -10,3 +10,7 @@ export const ipcRenderer = {
     _ipcRendererEmitter.on(evt, callback)
   )
 };
+
+export const shell = {
+  openExternal: jest.fn()
+};

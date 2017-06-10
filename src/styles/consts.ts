@@ -1,15 +1,25 @@
 import { css } from 'styled-components';
 
-export const COLOR_PRIMARY = '#C0392B';
-export const COLOR_PRIMARY_HOVER = '#B62F21';
-export const COLOR_SECONDARY = '#ECF0F1';
-export const FONT_FAMILY = `'Roboto', sans-serif`;
+export const colorMap = {
+  colorPrimary: '#D84315',
+  colorPrimaryHover: '#BF360C',
+  colorSecondary: '#F5F5F5',
+  colorBackground: '#F5F5F5',
+  colorText: '#212121'
+};
+export type Colors = keyof (typeof colorMap);
 
+const colorVariables = Object.keys(colorMap)
+  .map(key => {
+    return `--${key}: ${colorMap[key]};`;
+  })
+  .join('\n');
+
+export const FONT_FAMILY_MAIN = `'Roboto', sans-serif`;
+export const FONT_FAMILY_HEADLINE = `'Roboto', sans-serif`;
 export const GLOBAL_STYLES = css`
   :root {
-    --colorPrimary: ${COLOR_PRIMARY};
-    --colorPrimaryHover: ${COLOR_PRIMARY_HOVER};
-    --colorSecondary: ${COLOR_SECONDARY};
+    ${colorVariables}
   }
 
   html,
@@ -18,7 +28,9 @@ export const GLOBAL_STYLES = css`
     width: 100%;
     height: 100%;
     padding: 0;
-    font-family: ${FONT_FAMILY};
+    font-family: ${FONT_FAMILY_MAIN};
     font-weight: 300;
+    background: var(--colorBackground);
+    color: var(--colorText);
   }
 `;

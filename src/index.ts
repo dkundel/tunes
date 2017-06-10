@@ -1,4 +1,11 @@
-import { globalShortcut, clipboard, ipcMain, Menu, MenuItem } from 'electron';
+import {
+  globalShortcut,
+  clipboard,
+  ipcMain,
+  Menu,
+  MenuItem,
+  BrowserWindow
+} from 'electron';
 import * as menubar from 'menubar';
 import * as path from 'path';
 import installExtension, {
@@ -112,7 +119,8 @@ function getContextMenu() {
   const menu = new Menu();
   menu.append(
     new MenuItem({
-      label: 'About 🎵 tunes'
+      label: 'About 🎵 tunes',
+      click: openAbout
     })
   );
   menu.append(separator);
@@ -133,4 +141,19 @@ function getContextMenu() {
   menu.append(separator);
   menu.append(new MenuItem({ role: 'quit', label: 'Quit 🎵 tunes' }));
   return menu;
+}
+
+let aboutWindow: Electron.BrowserWindow | null;
+function openAbout() {
+  if (aboutWindow) {
+    aboutWindow.show();
+    return;
+  }
+
+  aboutWindow = new BrowserWindow({ frame: false, width: 500, height: 500 });
+  aboutWindow.loadURL(`file://${__dirname}/about.html`);
+
+  aboutWindow.on('close', () => {
+    aboutWindow = null;
+  });
 }

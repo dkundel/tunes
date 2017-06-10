@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test ExternalLink component verify snapshot 1`] = `
+<a
+  href="https://foo.bar"
+  onClick={[Function]}
+>
+  Hey
+</a>
+`;

@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test MaterialIcon component verify snapshot 1`] = `
+<i
+  className="material-icons"
+>
+  close
+</i>
+`;

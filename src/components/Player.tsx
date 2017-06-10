@@ -21,13 +21,13 @@ import PlayerProgressBar from './PlayerProgressBar';
 import YouTubePlayer from './YouTubePlayer';
 
 export interface PlayerProps {
-  currentSongInfo: SongInfo | undefined;
-  playerStatus: PlayerStatus;
-  togglePlayer: () => any;
-  nextSong: () => any;
-  prevSong: () => any;
-  loadPlaylist: (playlist: string) => any;
-  addSong: (playlist: string) => any;
+  currentSongInfo?: SongInfo | undefined;
+  playerStatus?: PlayerStatus;
+  togglePlayer?: () => any;
+  nextSong?: () => any;
+  prevSong?: () => any;
+  loadPlaylist?: (playlist: string) => any;
+  addSong?: (playlist: string) => any;
 }
 
 export class Player extends React.Component<PlayerProps, undefined> {
