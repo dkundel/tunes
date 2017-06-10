@@ -28,9 +28,3 @@ All notable changes to this project will be documented in this file. See [standa
 * **src:** Further initial refactoring for more components + redux ([1d6e90d](https://github.com/dkundel/tunes/commit/1d6e90d))
 * **tray:** Add alt tray menu ([31dfaed](https://github.com/dkundel/tunes/commit/31dfaed))
 * **tray:** Add right click option ([ca0d298](https://github.com/dkundel/tunes/commit/ca0d298))
-
-
-### BREAKING CHANGES
-
-* **project:** Play right now always starts the song from the beginning
-* **src:** Currently no working version
