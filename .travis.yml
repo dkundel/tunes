@@ -1,19 +1,22 @@
 osx_image: xcode8.3
 sudo: required
-
 os:
-  - osx
-
+- osx
 before_install:
-  - if [ $TRAVIS_OS_NAME == "linux" ]; then
-      export CXX="g++-4.9" CC="gcc-4.9" DISPLAY=:99.0;
-      sh -e /etc/init.d/xvfb start;
-      sleep 3;
-    fi
-
+- if [ $TRAVIS_OS_NAME == "linux" ]; then export CXX="g++-4.9" CC="gcc-4.9" DISPLAY=:99.0;
+  sh -e /etc/init.d/xvfb start; sleep 3; fi
 install:
-  - npm install
-
+- npm install
 script:
-  - npm test --silent
-  - npm run make -- --target=$TRAVIS_OS_NAME
+- npm test --silent
+- npm run make -- --target=$TRAVIS_OS_NAME
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: RNCU7XBGYPoJ4BeBBX+bMQdB7SnE3jrE6meXNBBe0Ct+P05jHdS4SdluzGEYE0weVe2KTJfu6Vm8y+dGUBgDWkn4u6Y2vR/zov0s8YYlFa/W4cyiH9SWdgHaFdWPi7Mz8wRAP1uIo3H7MsAfSgeK8qmxUOF5zA2JRYY+ZEzD2qYCvdemovOWjjrTucXR4v083Bl4/j8kyghLdJ6+Oj2I5CvS/JNhtfx81WOw4AFfjWcCRLZpSP8fnTGl+3gL15GqJq4BkBx8mUQ0BbesjXSksHHnWcKrhaTXNdaRI8PrNk+QZrKtviFM3lH7D70T1JjmWj6ollBOibKAOz1vkNXaczGb1H8xEGa2p52edJ2vBPltFzUCxFS2a8JcbIQkLo2h2QxLaeWewgjnvO5MJlaulLhh4qqoVeLQHfF9QO2ccLeTZVYvyC3YhJ3qoOkKUwx3JkA/qW3gd1V3StBlq5iAtxVJi9ONeKlI3UHGFbjgioRdMAOXb1EpuX1FQK8cEwpbc4biP1LSxhV+QrDM2gZOhWX9S76o4MDtHFeptMdiL/Zut57m2lLnISi3t/fgTWYIVBejgdLbcLZczAEIGBIf82WTBQz/Q7SiFNbkBmvda2WOKrwKS3FKwwuJSRNhoT0svJkR0nmMcywivnyqh75eBY+xAjxRN+MFAINWi/BDfRU=
+  file_glob: true
+  file: out/make/*
+  on:
+    repo: dkundel/tunes
+    tags: true
