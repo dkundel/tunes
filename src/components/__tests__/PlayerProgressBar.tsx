@@ -1,6 +1,5 @@
 import * as React from 'react';
 import PlayerProgressBar from '../PlayerProgressBar';
-import { shallow } from 'enzyme';
 import * as renderer from 'react-test-renderer';
 
 describe('test PlayerProgressBar component', () => {

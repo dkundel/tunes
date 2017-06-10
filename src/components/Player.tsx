@@ -21,7 +21,7 @@ import PlayerProgressBar from './PlayerProgressBar';
 import YouTubePlayer from './YouTubePlayer';
 
 export interface PlayerProps {
-  currentSongInfo: SongInfo;
+  currentSongInfo: SongInfo | undefined;
   playerStatus: PlayerStatus;
   togglePlayer: () => any;
   nextSong: () => any;
@@ -39,7 +39,6 @@ export class Player extends React.Component<PlayerProps, undefined> {
   }
 
   public componentDidMount() {
-    // this.props.loadPlayList('PLpyrjJvJ7GJ4i-2v0kVohE1cWJs12TjDF');
     ipcRenderer.on('player:toggle', () => {
       this.togglePlayPause();
     });
@@ -57,24 +56,20 @@ export class Player extends React.Component<PlayerProps, undefined> {
     });
   }
 
-  private togglePlayPause() {
+  public togglePlayPause() {
     this.props.togglePlayer();
   }
 
-  private nextSong() {
+  public nextSong() {
     this.props.nextSong();
   }
 
-  private prevSong() {
+  public prevSong() {
     this.props.prevSong();
   }
 
-  private hasSongInfo(): boolean {
-    return !!this.props.currentSongInfo;
-  }
-
   private getTimeString() {
-    let timeInSeconds = this.hasSongInfo() &&
+    let timeInSeconds = this.props.currentSongInfo &&
       this.props.currentSongInfo.currentTime
       ? this.props.currentSongInfo.currentTime
       : 0;
@@ -90,14 +85,14 @@ export class Player extends React.Component<PlayerProps, undefined> {
   }
 
   private getPercentage(): number {
-    if (!this.hasSongInfo()) {
+    if (!this.props.currentSongInfo) {
       return 0;
     }
     return this.props.currentSongInfo.percentage;
   }
 
   private getTitle(): string {
-    if (!this.hasSongInfo()) {
+    if (!this.props.currentSongInfo) {
       return 'No video loaded';
     }
 
@@ -122,7 +117,7 @@ export class Player extends React.Component<PlayerProps, undefined> {
   }
 
   private getVideoId() {
-    if (!this.hasSongInfo()) {
+    if (!this.props.currentSongInfo) {
       return '';
     }
     return this.props.currentSongInfo.videoId;
@@ -151,7 +146,7 @@ export class Player extends React.Component<PlayerProps, undefined> {
             title={this.getTitle()}
           />
           <PlayerMetaBar>
-            <PlayerTimer>
+            <PlayerTimer className="timer">
               {this.getTimeString()}
             </PlayerTimer>
           </PlayerMetaBar>
@@ -185,16 +180,16 @@ const PlayerTimer = styled.p`
   margin-right: 15px;
 `;
 
-const mapStateToProps = (state: GlobalState) => ({
+export const mapStateToProps = (state: GlobalState) => ({
   currentSongInfo: getCurrentSongInfo(state),
   playerStatus: getPlayerStatus(state)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<undefined>) => ({
+export const mapDispatchToProps = (dispatch: Dispatch<undefined>) => ({
   togglePlayer: () => dispatch(togglePlayer()),
   nextSong: () => dispatch(nextSong()),
   prevSong: () => dispatch(prevSong()),
-  loadPlayList: (playlist: string) => dispatch(loadPlaylist(playlist)),
+  loadPlaylist: (playlist: string) => dispatch(loadPlaylist(playlist)),
   addSong: (song: string) => dispatch(addSong(song))
 });
 

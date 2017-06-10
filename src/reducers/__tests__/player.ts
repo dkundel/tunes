@@ -309,7 +309,7 @@ describe('player reducer', () => {
 
   describe('should handle CHANGE_PLAYER_STATUS', () => {
     beforeEach(() => {
-      (ipcRenderer.send as jest.Mock<undefined>).mockReset();
+      (ipcRenderer.send as jest.Mock<undefined>).mockClear();
     });
 
     test('handles initial state', () => {

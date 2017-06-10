@@ -1,0 +1,184 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test Player component display song info correct [snapshot] 1`] = `
+<div
+  className="sc-gzVnrw lfdfns"
+>
+  <div
+    className="sc-htoDjs hOPoSy"
+  >
+    <div
+      className="sc-dnqmqq bDsesi"
+    >
+      <button
+        className="sc-bwzfXH dzjsPu"
+        onClick={[Function]}
+      >
+        <i
+          className="material-icons"
+        >
+          play_arrow
+        </i>
+      </button>
+      <button
+        className="sc-bwzfXH dzjsPu"
+        onClick={[Function]}
+      >
+        <i
+          className="material-icons"
+        >
+          skip_previous
+        </i>
+      </button>
+      <button
+        className="sc-bwzfXH dzjsPu"
+        onClick={[Function]}
+      >
+        <i
+          className="material-icons"
+        >
+          skip_next
+        </i>
+      </button>
+    </div>
+    <div
+      className="sc-htpNat dgMhXc"
+    >
+      <p
+        className="sc-bxivhb iIkqZF"
+      >
+        My Unit Test
+      </p>
+      <div
+        className="sc-EHOje eCGwaZ"
+        style={
+          Object {
+            "--percentage": "0%",
+          }
+        }
+      />
+      <div
+        className="sc-bZQynM hMKrxa"
+        style={
+          Object {
+            "--percentage": "0%",
+          }
+        }
+      >
+        <p
+          className="sc-ifAKCX jmWDig"
+        >
+          My Unit Test
+        </p>
+      </div>
+    </div>
+    <div
+      className="sc-iwsKbI ktdSOd"
+    >
+      <p
+        className="timer sc-gZMcBi kegliO"
+      >
+        00:00
+      </p>
+    </div>
+  </div>
+  <img
+    className="player-background blur-background sc-bdVaJa boBCaA"
+    src="https://img.youtube.com/vi/someid/default.jpg"
+  />
+  <div
+    id="YouTubePlayer"
+  />
+</div>
+`;
+
+exports[`test Player component handles default 1`] = `
+<div
+  className="sc-gzVnrw lfdfns"
+>
+  <div
+    className="sc-htoDjs hOPoSy"
+  >
+    <div
+      className="sc-dnqmqq bDsesi"
+    >
+      <button
+        className="sc-bwzfXH dzjsPu"
+        onClick={[Function]}
+      >
+        <i
+          className="material-icons"
+        >
+          play_arrow
+        </i>
+      </button>
+      <button
+        className="sc-bwzfXH dzjsPu"
+        onClick={[Function]}
+      >
+        <i
+          className="material-icons"
+        >
+          skip_previous
+        </i>
+      </button>
+      <button
+        className="sc-bwzfXH dzjsPu"
+        onClick={[Function]}
+      >
+        <i
+          className="material-icons"
+        >
+          skip_next
+        </i>
+      </button>
+    </div>
+    <div
+      className="sc-htpNat dgMhXc"
+    >
+      <p
+        className="sc-bxivhb iIkqZF"
+      >
+        No video loaded
+      </p>
+      <div
+        className="sc-EHOje eCGwaZ"
+        style={
+          Object {
+            "--percentage": "0%",
+          }
+        }
+      />
+      <div
+        className="sc-bZQynM hMKrxa"
+        style={
+          Object {
+            "--percentage": "0%",
+          }
+        }
+      >
+        <p
+          className="sc-ifAKCX jmWDig"
+        >
+          No video loaded
+        </p>
+      </div>
+    </div>
+    <div
+      className="sc-iwsKbI ktdSOd"
+    >
+      <p
+        className="timer sc-gZMcBi kegliO"
+      >
+        00:00
+      </p>
+    </div>
+  </div>
+  <img
+    className="player-background blur-background sc-bdVaJa boBCaA"
+  />
+  <div
+    id="YouTubePlayer"
+  />
+</div>
+`;
