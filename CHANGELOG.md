@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.0-alpha"></a>
+# [1.0.0-alpha](https://github.com/dkundel/tunes/compare/v1.0.0...v1.0.0-alpha) (2017-06-10)
+
+
+
 <a name="1.0.0"></a>
 # 1.0.0 (2017-06-10)
 
