@@ -49,8 +49,6 @@ export interface extendedYTPlayer extends YT.Player {
   getVideoData(): YouTubeVideoData;
 }
 
-export type YTOnReadyEvent = { target: extendedYTPlayer };
-
 export class YouTubePlayer extends React.Component<
   YouTubePlayerProps,
   undefined
@@ -111,11 +109,10 @@ export class YouTubePlayer extends React.Component<
     }
   }
 
-  private onReady(evt: YTOnReadyEvent) {
+  private onReady(evt: YT.PlayerEvent) {
     if (evt.target) {
-      this.player = evt.target;
+      this.player = evt.target as extendedYTPlayer;
       this.player.playVideo();
-      window['player'] = this.player;
     }
   }
 
@@ -236,7 +233,7 @@ const mapStateToProps = (state: GlobalState) => ({
   nextStatus: getNextPlayerStatus(state)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<undefined>) => ({
+export const mapDispatchToProps = (dispatch: Dispatch<undefined>) => ({
   updatePlayerStatus: (status: PlayerStatus) =>
     dispatch(changePlayerStatus(status)),
   updateQueueIndex: (index: number) => dispatch(setQueueIndex(index)),
