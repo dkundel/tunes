@@ -15,7 +15,7 @@ describe('test BlurryYouTubeBackground component', () => {
 
   test('handles empty videoId', () => {
     const component = renderer.create(
-      <BlurryYouTubeBackground videoId="testid">
+      <BlurryYouTubeBackground videoId="">
         Facebook
       </BlurryYouTubeBackground>
     );

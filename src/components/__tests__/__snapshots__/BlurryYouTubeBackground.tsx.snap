@@ -3,7 +3,6 @@
 exports[`test BlurryYouTubeBackground component handles empty videoId 1`] = `
 <img
   className="player-background blur-background sc-bdVaJa boBCaA"
-  src="https://img.youtube.com/vi/testid/default.jpg"
 />
 `;
 
