@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test About component verify snapshot 1`] = `
+<div
+  className="sc-htpNat dVjawc"
+>
+  <h1
+    className="sc-bxivhb cJfdTg sc-bdVaJa eMtwIx"
+  >
+    🎵
+  </h1>
+  <h1
+    className="sc-bdVaJa eMtwIx"
+  >
+    About Tunes
+  </h1>
+  <p
+    className="sc-ifAKCX qycJf sc-bwzfXH bGgvvP"
+  >
+    This application allows you to play YouTube playlists in a small player right in your menubar. It is powered by the YouTube iFrame API and therefore might have limitations on which songs can be played. It will automatically skip blocked videos.
+  </p>
+  <p
+    className="sc-ifAKCX qycJf sc-bwzfXH bGgvvP"
+  >
+    The application is developed open-source. You can inspect the source on its GitHub repository below.
+  </p>
+  <div
+    className="sc-EHOje kLbaUi"
+  >
+    <div
+      className="sc-bZQynM kzlsZH"
+    >
+      <div
+        className="sc-htoDjs eOdlka sc-gzVnrw iZIxNz"
+      >
+        Version
+      </div>
+      <div
+        className="sc-gzVnrw iZIxNz"
+      >
+        1.0.0
+      </div>
+    </div>
+    <div
+      className="sc-bZQynM kzlsZH"
+    >
+      <div
+        className="sc-htoDjs eOdlka sc-gzVnrw iZIxNz"
+      >
+        Developer
+      </div>
+      <div
+        className="sc-gzVnrw iZIxNz"
+      >
+        Dominik Kundel
+      </div>
+    </div>
+    <div
+      className="sc-bZQynM kzlsZH"
+    >
+      <div
+        className="sc-htoDjs eOdlka sc-gzVnrw iZIxNz"
+      >
+        Source Code
+      </div>
+      <div
+        className="sc-gzVnrw iZIxNz"
+      >
+        <a
+          href="https://github.com/dkundel/tunes"
+          onClick={[Function]}
+          target="_blank"
+        >
+          https://github.com/dkundel/tunes
+        </a>
+      </div>
+    </div>
+  </div>
+  <button
+    className="sc-dnqmqq dWsTFn"
+    id="closeAbout"
+    onClick={[Function]}
+  >
+    <i
+      className="material-icons"
+    >
+      close
+    </i>
+  </button>
+</div>
+`;

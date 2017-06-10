@@ -1,7 +1,6 @@
 import * as React from 'react';
 import MaterialIcon from '../MaterialIcon';
 import * as renderer from 'react-test-renderer';
-import { shell } from 'electron';
 
 describe('test MaterialIcon component', () => {
   test('verify snapshot', () => {

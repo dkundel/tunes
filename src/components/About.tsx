@@ -94,7 +94,7 @@ export default class About extends React.Component<any, any> {
             </InfoTableEntry>
           </InfoTableRow>
         </InfoTable>
-        <CloseButton onClick={() => this.closeDialog()}>
+        <CloseButton id="closeAbout" onClick={() => this.closeDialog()}>
           <MaterialIcon icon="close"/>
         </CloseButton>
       </Container>

@@ -14,3 +14,18 @@ export const ipcRenderer = {
 export const shell = {
   openExternal: jest.fn()
 };
+
+export const window = {
+  close: jest.fn()
+};
+
+export const app = {
+  getVersion: jest.fn(() => '1.0.0')
+};
+
+export const remote = {
+  app,
+  getCurrentWindow: () => {
+    return window;
+  }
+};
