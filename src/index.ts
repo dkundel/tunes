@@ -14,8 +14,12 @@ import installExtension, {
 } from 'electron-devtools-installer';
 import { enableLiveReload } from 'electron-compile';
 import { parse } from 'url';
+import * as Config from 'electron-config';
+
+import DefaultConfig from './config/default';
 
 const isDevMode = process.execPath.match(/[\\/]electron/);
+const config = new Config({ defaults: DefaultConfig });
 
 const PLAYING_ICON = path.join(__dirname, 'icon-active.png');
 const DEFAULT_ICON = path.join(__dirname, 'icon.png');
@@ -75,7 +79,12 @@ app.on('before-quit', () => {
 
 function registerHandlers() {
   const web = mb.window.webContents;
-  globalShortcut.register('CmdOrCtrl+Shift+U', () => {
+  const showHideShortcut = config.get('shortcuts.showHide');
+  const playPauseShortcut = config.get('shortcuts.playPause');
+  const nextShortcut = config.get('shortcuts.next');
+  const prevShortcut = config.get('shortcuts.prev');
+  const loadShortcut = config.get('shortcuts.load');
+  globalShortcut.register(showHideShortcut, () => {
     if (isVisible) {
       mb.hideWindow();
     } else {
@@ -83,19 +92,19 @@ function registerHandlers() {
     }
   });
 
-  globalShortcut.register('MediaPlayPause', () => {
+  globalShortcut.register(playPauseShortcut, () => {
     web.send('player:toggle');
   });
 
-  globalShortcut.register('MediaPreviousTrack', () => {
+  globalShortcut.register(prevShortcut, () => {
     web.send('player:prev');
   });
 
-  globalShortcut.register('MediaNextTrack', () => {
+  globalShortcut.register(nextShortcut, () => {
     web.send('player:next');
   });
 
-  globalShortcut.register('CmdOrCtrl+Shift+Y', () => {
+  globalShortcut.register(loadShortcut, () => {
     let ytUrl = parse(clipboard.readText(), true);
     if (ytUrl && ytUrl.query) {
       if (ytUrl.query.list) {
