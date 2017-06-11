@@ -5,7 +5,7 @@ platform:
 
 # Test against the latest version of this Node.js version
 environment:
-  nodejs_version: "8"
+  nodejs_version: "6"
 
 cache:
   - '%APPDATA%\npm-cache'
@@ -19,8 +19,8 @@ init:
 install:
   # Get the latest stable version of Node.js or io.js
   - ps: Install-Product node $env:nodejs_version $env:platform
-  - npm install -g npm@5
-  - set PATH=%APPDATA%\npm;%PATH%
+  # - npm install -g npm@5
+  # - set PATH=%APPDATA%\npm;%PATH%
   # install modules
   - npm install
 
