@@ -27,7 +27,7 @@ test_script:
   - npm test
 
 build_script:
-  - npm run make:win
+  - npm run make
 
 deploy:
   release: tunes-v$(appveyor_build_version)
