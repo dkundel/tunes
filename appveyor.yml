@@ -1,0 +1,43 @@
+version: '{build}'
+
+# Test against the latest version of this Node.js version
+environment:
+  nodejs_version: "8"
+
+cache:
+  - node_modules
+
+# Fix CRLF line endings
+init:
+  - git config --global core.autocrlf true
+
+# Install scripts. (runs after repo cloning)
+install:
+  # Get the latest stable version of Node.js or io.js
+  - ps: Install-Product node $env:nodejs_version
+  # install modules
+  - npm install
+
+# Post-install test scripts.
+test_script:
+  # Output useful info for debugging.
+  - node --version
+  - npm --version
+  # run tests
+  - npm test
+
+build_script:
+  - npm run make:win
+
+deploy:
+  release: tunes-v$(appveyor_build_version)
+  description: 'tunes for Windows'
+  provider: GitHub
+  auth_token:
+    secure: 84QVmSiyhB1UtgBfEsR4iR6UM6jXMg3mIH/wxD85DUV1LMY0Hi90/WdNm4BuXHDK # your encrypted token from GitHub
+  artifact: /out\make\.*/            # upload all NuGet packages to release assets
+  draft: false
+  prerelease: false
+  on:
+    branch: master                 # release from master branch only
+    appveyor_repo_tag: true        # deploy on tag push only

@@ -22,7 +22,8 @@
     "release:minor": "npm run release -- --release-as minor",
     "release:patch": "npm run release -- --release-as patch",
     "release": "standard-version",
-    "start": "electron-forge start"
+    "start": "electron-forge start",
+    "publish": "electron-forge publish"
   },
   "keywords": [],
   "author": "Dominik Kundel <dominik.kundel@gmail.com>",
@@ -52,11 +53,11 @@
       "electronInstallerDebian": {},
       "electronInstallerRedhat": {},
       "github_repository": {
-        "owner": "",
-        "name": ""
+        "owner": "dkundel",
+        "name": "tunes"
       },
       "windowsStoreConfig": {
-        "packageName": "",
+        "packageName": "tunes",
         "name": "tunes"
       }
     },
