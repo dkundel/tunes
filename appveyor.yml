@@ -1,11 +1,15 @@
 version: '{build}'
 
+platform:
+  - x64
+
 # Test against the latest version of this Node.js version
 environment:
   nodejs_version: "8"
 
 cache:
-  - node_modules
+  - '%APPDATA%\npm-cache'
+  - '%USERPROFILE%\.electron'
 
 # Fix CRLF line endings
 init:
@@ -14,7 +18,9 @@ init:
 # Install scripts. (runs after repo cloning)
 install:
   # Get the latest stable version of Node.js or io.js
-  - ps: Install-Product node $env:nodejs_version
+  - ps: Install-Product node $env:nodejs_version $env:platform
+  - npm install -g npm@5
+  - set PATH=%APPDATA%\npm;%PATH%
   # install modules
   - npm install
 
@@ -24,7 +30,7 @@ test_script:
   - node --version
   - npm --version
   # run tests
-  - npm test
+  - npm test --silent
 
 build_script:
   - npm run make
