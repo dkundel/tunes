@@ -23,7 +23,9 @@
     "release:patch": "npm run release -- --release-as patch",
     "release": "standard-version",
     "start": "electron-forge start",
-    "publish": "electron-forge publish"
+    "publish": "electron-forge publish",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "keywords": [],
   "author": "Dominik Kundel <dominik.kundel@gmail.com>",
@@ -116,7 +118,8 @@
     "redux-devtools-extension": "^2.13.2",
     "redux-logger": "^3.0.6",
     "styled-components": "^2.0.0",
-    "tslib": "^1.7.1"
+    "tslib": "^1.7.1",
+    "snyk": "^1.42.6"
   },
   "devDependencies": {
     "@types/enzyme": "^2.8.0",
@@ -138,5 +141,6 @@
     "ts-jest": "^20.0.6",
     "tslint": "^4.2.0",
     "typescript": "~2.1.4"
-  }
+  },
+  "snyk": true
 }
